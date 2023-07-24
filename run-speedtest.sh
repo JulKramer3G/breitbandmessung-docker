@@ -7,17 +7,17 @@ while true
 do
 
     # wait 65 seconds then try again
-    sleep 65
+    sleep 10
 
     # if clipboard is set to 'RUN'
     clipboard="$(DISPLAY=:0 xclip -o)"
     #if [ "$clipboard" == "RUN" ] || [ -f "/RUN" ]
 
-    substring="RUN"
+    searchstring="RUN"
 
     # check if /RUN File exists or clipboard set to RUN, and time is past 7:30
     # if [[ -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
-    if [[ "$clipboard" == *"$substring"* || -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
+    if [[ "$clipboard" == *"$searchstring"* || -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
     then
         echo "Tring to start speedtest..."
         
@@ -52,17 +52,26 @@ do
 
     else
         echo "#############################"
-        echo "NOT STARTING. Waiting for RUN set in clipboard or file /RUN being available."
-        echo "Value in clipboard is $clipboard)"
+        echo "NOT STARTING. Not the correct time OR Waiting for 'RUN' set in clipboard or file '/RUN' being available."
+        echo "Value in clipboard is $clipboard"
+        if [ "$clipboard" == *"$searchstring"*]; then
+            echo "Clipboard string exists."
+        else 
+            echo "Clipboard string does not exist."
+        fi
         if [ -f "/RUN" ]; then
             echo "File 'RUN' exists in the root directory."
         else
             echo "File 'RUN' does not exist in the root directory."
         fi
+        if [ $(date +%H:%M) > "07:30" ]; then
+            echo "Time of day is okay, we could start."
+        else
+            echo "Time of day is not okay, we wait."
+        fi
     fi
 
 done
-
 
 
 # xdotool getmouselocation
