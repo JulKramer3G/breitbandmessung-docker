@@ -1,10 +1,16 @@
 # Breitbandmessung.de Docker Container
 
 # ORIGINAL IMAGE
+[![build_original_docker_image](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_original_image.yml/badge.svg)](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_original_image.yml)
 Automatically builds the docker container for the GitHub container registry of repo https://github.com/fabianbees/breitbandmessung-docker
 
 # CUSTOM IMAGE
+[![build_custom_docker_image](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_custom_image.yml/badge.svg)](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_custom_image.yml)
 Builds this repository for the GitHub container registry.
+## Changes in custom image: 
+- Brought back clipboard check for "RUN" string to activate script
+
+
 
 ## Deploy via docker-compose (recommended)
 
