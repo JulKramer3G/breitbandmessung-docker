@@ -15,7 +15,7 @@ do
 
     # check if /RUN File exists or clipboard set to RUN, and time is past 7:30
     # if [[ -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
-    if [[ "$clipboard" == "RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
+    if [[ "$clipboard" == "RUN" || -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
     then
         echo "Tring to start speedtest..."
         
