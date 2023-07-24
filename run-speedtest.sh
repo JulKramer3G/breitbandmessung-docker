@@ -5,14 +5,15 @@
 
 while true
 do
-
+    echo "#############################"
+    echo "Waiting 65 seconds, starting $(date +"%H:%M.%S")"
     # wait 65 seconds then try again
-    sleep 10
+    sleep 65
 
-    # check if /RUN File exists or clipboard set to RUN, and time is past 7:30
-    # if [[ -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
-    # if [[ "$clipboard" == *"$searchstring"* || -f "/RUN" ]] && [[ $(date +%H:%M) > "07:30" ]]
-    # then
+    # extract clipboard
+    clipboard="$(DISPLAY=:0 xclip -o)"
+    searchstring="RUN"
+
     # Get the current hour and minute in 24-hour format (e.g., 14:30)
     current_time=$(date +"%H:%M")
 
@@ -32,8 +33,6 @@ do
         echo "The current time is between 07:30 AM and 09:00 PM."
 
         # check if clipboard is set to 'RUN' or file RUN in root exists
-        clipboard="$(DISPLAY=:0 xclip -o)"
-        searchstring="RUN"
         if [ "$clipboard" == *"$searchstring"* ] || [ -f "/RUN" ]; then
             echo "Tring to start speedtest..."
             
@@ -63,28 +62,26 @@ do
 
 
             # wait 5:05 minutes
+            echo "Waiting 5 minutes, starting $(date +"%H:%M.%S")"
             sleep 260
-            echo "waiting 5 minutes..."
-
         else
-            echo "#############################"
             echo "NOT STARTING. Waiting for 'RUN' set in clipboard or file '/RUN' being available."
-            echo "DEBUG information:"
-            echo "Value in clipboard currently is: $clipboard"
-            if [ "$clipboard" == *"$searchstring"*]; then
-                echo "Clipboard string exists."
-            else 
-                echo "Clipboard string does not exist."
-            fi
-            if [ -f "/RUN" ]; then
-                echo "File 'RUN' exists in the root directory."
-            else
-                echo "File 'RUN' does not exist in the root directory."
-            fi
         fi
     else
         echo "NOT STARTING. The current time is outside the specified range of 07:30 AM and 09:00 PM."
     fi
+    echo "GENERAL DEBUG INFORMATION:"
+    if [ "$clipboard" == *"$searchstring"*]; then
+        echo "Clipboard string 'RUN' is being found."
+    else 
+        echo "Clipboard string 'RUN' cannot be found, value in clipboard currently is: $clipboard"
+    fi
+    if [ -f "/RUN" ]; then
+        echo "File 'RUN' exists in the root directory."
+    else
+        echo "File 'RUN' does not exist in the root directory."
+    fi
+    echo "Current time is $(date +"%H:%M.%S")"
 done
 
 

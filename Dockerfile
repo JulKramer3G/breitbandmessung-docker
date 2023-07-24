@@ -22,6 +22,7 @@ RUN \
     install_app_icon.sh "$APP_ICON_URL" "$APP_ICON_DESC"
 
 # Copy the start script.
+COPY trigger_start.sh /trigger_start.sh
 COPY startapp.sh /startapp.sh
 COPY run-speedtest.sh /etc/services.d/speedtest/run
 

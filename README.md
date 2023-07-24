@@ -7,6 +7,9 @@ Automatically builds the docker container for the GitHub container registry of r
 # CUSTOM IMAGE
 [![build_custom_docker_image](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_custom_image.yml/badge.svg)](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_custom_image.yml)
 Builds this repository for the GitHub container registry.
+## Starting
+After you configured the utility, leave it in the "Messung starten" screen.
+Use the console in the docker and execute the script `trigger_start.sh` in the root directory to start everything.
 ## Changes in custom image: 
 - Brought back clipboard check for "RUN" string to activate script
 
