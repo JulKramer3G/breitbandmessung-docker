@@ -1,6 +1,10 @@
 # Breitbandmessung.de Docker Container
 
+# ORIGINAL IMAGE
+Automatically builds the docker container for the GitHub container registry of repo https://github.com/fabianbees/breitbandmessung-docker
 
+# CUSTOM IMAGE
+Builds this repository for the GitHub container registry.
 
 ## Deploy via docker-compose (recommended)
 
