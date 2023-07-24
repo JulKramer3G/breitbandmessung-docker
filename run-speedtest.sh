@@ -51,7 +51,14 @@ do
         echo "waiting 5 minutes..."
 
     else
-        echo "RUN not set in clipboard or file /RUN not available. (value in clipboard is $clipboard)"
+        echo "#############################"
+        echo "NOT STARTING. Waiting for RUN set in clipboard or file /RUN being available."
+        echo "Value in clipboard is $clipboard)"
+        if [ -f "/RUN" ]; then
+            echo "File 'RUN' exists in the root directory."
+        else
+            echo "File 'RUN' does not exist in the root directory."
+        fi
     fi
 
 done
