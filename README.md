@@ -7,21 +7,26 @@ Automatically builds the docker container for the GitHub container registry of r
 # CUSTOM IMAGE
 [![build_custom_docker_image](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_custom_image.yml/badge.svg)](https://github.com/JulKramer3G/breitbandmessung-docker/actions/workflows/build_custom_image.yml)
 Builds this repository for the GitHub container registry.
-## Starting
-After you configured the utility, leave it in the "Messung starten" screen.
-Use the console in the docker and execute the script `trigger_start.sh` in the root directory to start everything.
-
-OR
 
 ## Automated Speedtesting
 
-1. Open your browser with the following url: http://ip-of-docker-host:5800
+### Preparation
 
+1. Open your browser with the following url: http://ip-of-docker-host:5800
 
 2. Go throgh setup process, until you reach the following page:
 ![Screenshot1](images/screenshot1.png)
 **DO NOT KLICK THE BUTTON "Messung durchführen" if you want to use the Speedtest automation script!**
 --> The automation script requires this exact screen to be shown for the automatic execution of a "Messkampagne".
+
+### Start via GUI
+
+3. To start the script, use the website on the exposed port and put the string 'RUN' in the clipboard. To stop the script, remove the string. You may need to do this twice (error unknown). After a maximum of 15 seconds you should see the screen in action. 
+![Screenshot1](images/clipboard.png)
+
+### Start via terminal
+After you configured the utility, leave it in the "Messung starten" screen.
+Use the console in the docker and execute the script `trigger_start.sh` in the root directory to start everything.
 
 3. open a console (bash) to your docker container (```docker exec -it breitband-desktop bash```) and execute the following command inside this docker container:
 ```bash
@@ -29,21 +34,36 @@ touch /RUN
 ```
 This creates a empty file called ```RUN``` in the root directory of the container, the automation script is looking for this file for knowing when the setup process has finished and speedtesting can start.
 
-4. Speedtesting get's started, the script tries to click through the buttons for running a speedtest every 5 minutes. If the countdown timer (waiting period) has not finished yet, the cilcks will do nothing.
+### During the process
 
-5. When all mesurements are done, the automation-script can be stopped by removing the ```/RUN``` file with the following command ```rm /RUN``` inside the docker container
+4. Speedtesting get's started, the script tries to click through the buttons for running a speedtest every 5 minutes. If the countdown timer (waiting period) has not finished yet, the clicks will do nothing.
+
+5. When all mesurements are done, the automation-script can be stopped by removing the ```/RUN``` file with the following command ```rm /RUN``` inside the docker container or change the content of the clipboard to something else than `RUN` via the GUI.
 
 
-!! Currently NOT WORKING:
-To start the script, use the website on the exposed port and put the string 'RUN' in the clipboard. To stop the script, remove the string. 
-![Screenshot1](images/clipboard.png)
+
 
 ## Changes in custom image: 
 - Brought back clipboard check for "RUN" string to activate script
 
 
+## Deploy via docker run from GHCR.io
 
-## Deploy via docker-compose (recommended)
+### Building the Container
+
+Download container:
+
+```bash
+docker pull ghcr.io/julkramer3g/breitbandmessung-docker_original:latest
+```
+
+or
+
+```bash
+docker pull ghcr.io/julkramer3g/breitbandmessung-docker_custom:latest
+```
+
+## Deploy via docker-compose (from source)
 
 Deploy container via docker-compose v3 schema:
 
@@ -80,23 +100,6 @@ services:
 ![Screenshot1](images/portainer-stack.png)
 
 
-
-## Deploy via docker run
-
-### Building the Container
-
-First you have to build the docker container localy, due to licencing I will not provide a prebuild image of the app.
-
-You can do this with the following commands:
-
-```bash
-git clone https://github.com/fabianbees/breitbandmessung-docker.git
-
-cd breitbandmessung-docker
-
-docker build -t breitband:latest .
-```
-
 ### Run the Container
 
 Then the container can be run via docker:
@@ -107,32 +110,24 @@ docker run -d \
     -e TZ=Europe/Berlin \
     -v $PWD/breitbandmessung/data:/config/xdg/config/Breitbandmessung \
     -p 5800:5800 \
-    breitband:latest
+    ghcr.io/julkramer3g/breitbandmessung-docker_original:latest
 ```
+
+or 
+
+
+```bash
+docker run -d \
+    --name breitband-desktop \
+    -e TZ=Europe/Berlin \
+    -v $PWD/breitbandmessung/data:/config/xdg/config/Breitbandmessung \
+    -p 5800:5800 \
+    ghcr.io/julkramer3g/breitbandmessung-docker_custom:latest
+```
+
+
 
 Appdata for the Breitbandmessung Desktop App lives in the following directory (inside the container): ```/config/xdg/config/Breitbandmessung```. Therefore this directory can be mounted to a host directory.
-
-
-
-## Automated Speedtesting
-
-1. Open your browser with the following url: http://ip-of-docker-host:5800
-
-
-2. Go throgh setup process, until you reach the following page:
-![Screenshot1](images/screenshot1.png)
-**DO NOT KLICK THE BUTTON "Messung durchführen" if you want to use the Speedtest automation script!**
---> The automation script requires this exact screen to be shown for the automatic execution of a "Messkampagne".
-
-3. open a console (bash) to your docker container (```docker exec -it breitband-desktop bash```) and execute the following command inside this docker container:
-```bash
-touch /RUN
-```
-This creates a empty file called ```RUN``` in the root directory of the container, the automation script is looking for this file for knowing when the setup process has finished and speedtesting can start.
-
-4. Speedtesting get's started, the script tries to click through the buttons for running a speedtest every 5 minutes. If the countdown timer (waiting period) has not finished yet, the cilcks will do nothing.
-
-5. When all mesurements are done, the automation-script can be stopped by removing the ```/RUN``` file with the following command ```rm /RUN``` inside the docker container
 
 
 ## Additional Notes

@@ -2,7 +2,6 @@
 
 # this script is invoced every 6 minutes if clipboard is set to 'RUN', then a speedtest runs
 
-
 while true
 do
     echo "#############################"
@@ -12,7 +11,20 @@ do
 
     # extract clipboard
     clipboard="$(DISPLAY=:0 xclip -o)"
-    searchstring="RUN"
+    SUB='RUN'
+
+    echo "GENERAL DEBUG INFORMATION:"
+    if [[ "$clipboard" == *"$SUB"* ]]; then
+        echo "Clipboard string 'RUN' is being found."
+    else 
+        echo "Clipboard string 'RUN' cannot be found, value in clipboard currently is: $clipboard"
+    fi
+    if [ -f "/RUN" ]; then
+        echo "File 'RUN' exists in the root directory."
+    else
+        echo "File 'RUN' does not exist in the root directory."
+    fi
+    echo "Current time is $(date +"%H:%M.%S")"
 
     # Get the current hour and minute in 24-hour format (e.g., 14:30)
     current_time=$(date +"%H:%M")
@@ -25,7 +37,7 @@ do
     # Convert the start and end times to minutes for easier comparison
     start_time_minutes=$(( 7 * 60 + 30 ))
     end_time_minutes=$(( 21 * 60 ))
-    echo "$current_hour min: $current_minute"
+
     # Convert the current time to minutes for comparison
     let "current_time_minutes=$current_hour * 60 + $current_minute"
 
@@ -34,7 +46,7 @@ do
         echo "The current time is between 07:30 AM and 09:00 PM."
 
         # check if clipboard is set to 'RUN' or file RUN in root exists
-        if [ "$clipboard" == *"$searchstring"* ] || [ -f "/RUN" ]; then
+        if [[ "$clipboard" == *"$SUB"* ]] || [ -f "/RUN" ]; then
             echo "Tring to start speedtest..."
             
             # messung durchfuehren
@@ -76,18 +88,6 @@ do
     else
         echo "NOT STARTING. The current time is outside the specified range of 07:30 AM and 09:00 PM."
     fi
-    echo "GENERAL DEBUG INFORMATION:"
-    if [ "$clipboard" == *"$searchstring"* ]; then
-        echo "Clipboard string 'RUN' is being found."
-    else 
-        echo "Clipboard string 'RUN' cannot be found, value in clipboard currently is: $clipboard"
-    fi
-    if [ -f "/RUN" ]; then
-        echo "File 'RUN' exists in the root directory."
-    else
-        echo "File 'RUN' does not exist in the root directory."
-    fi
-    echo "Current time is $(date +"%H:%M.%S")"
 done
 
 
