@@ -5,7 +5,7 @@
 while true
 do
     echo "#############################"
-    echo "Waiting 15 seconds, starting $(date +"%H:%M.%S")"
+    echo "Waiting 15 seconds, starting $(TZ='Europe/Berlin' date +"%H:%M.%S")"
     # wait 65 seconds then try again
     sleep 10
 
@@ -80,7 +80,7 @@ do
             sleep 1
 
             # wait 5:05 minutes
-            echo "Waiting 5 minutes, starting $(date +"%H:%M.%S")"
+            echo "Waiting 5 minutes, starting $(TZ='Europe/Berlin' date +"%H:%M.%S")"
             sleep 260
         else
             echo "NOT STARTING. Waiting for 'RUN' set in clipboard or file '/RUN' being available."
