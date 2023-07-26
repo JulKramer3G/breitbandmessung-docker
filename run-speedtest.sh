@@ -46,7 +46,7 @@ do
 
     # Check if the current time is within the specified range
     if (( current_time_minutes >= start_time_minutes && current_time_minutes <= end_time_minutes )); then
-        echo "The current time is between 07:30 AM and 09:00 PM."
+        echo "The current time is between 07:30 and 21:00."
 
         # check if clipboard is set to 'RUN' or file RUN in root exists
         if [[ "$clipboard" == *"$SUB"* ]] || [ -f "/RUN" ]; then
@@ -89,7 +89,7 @@ do
             echo "NOT STARTING. Waiting for 'RUN' set in clipboard or file '/RUN' being available."
         fi
     else
-        echo "NOT STARTING. The current time is outside the specified range of 07:30 AM and 09:00 PM."
+        echo "NOT STARTING. The current time is outside the specified range of 07:30 and 21:00."
     fi
 done
 
