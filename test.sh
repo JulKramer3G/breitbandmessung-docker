@@ -1,8 +1,4 @@
 #!/bin/bash
 
-STR=$(<clipboard_file.txt)
-echo "$STR"
-SUB='RUN'
-if [[ "$STR" == *"$SUB"* ]]; then
-  echo "It's there."
-fi
+    current_time=$(TZ='Europe/Berlin' date +"%H:%M")
+    echo $current_time

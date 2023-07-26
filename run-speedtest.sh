@@ -24,10 +24,10 @@ do
     else
         echo "File 'RUN' does not exist in the root directory."
     fi
-    echo "Current time is $(date +"%H:%M.%S")"
+    echo "Current time is $(TZ='Europe/Berlin' date +"%H:%M.%S")"
 
     # Get the current hour and minute in 24-hour format (e.g., 14:30)
-    current_time=$(date +"%H:%M")
+    current_time=$(TZ='Europe/Berlin' date +"%H:%M")
 
     # Extract the hour and minute components
     current_hour=${current_time:0:2}
