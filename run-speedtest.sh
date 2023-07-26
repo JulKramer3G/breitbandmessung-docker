@@ -1,11 +1,14 @@
 #!/bin/bash
 
+# Change this to your timezone. Currently set to Europe/Berlin since this tool will probably only be used in germany
+export TZ=Europe/Berlin
+
 # this script is invoced every 6 minutes if clipboard is set to 'RUN', then a speedtest runs
 
 while true
 do
     echo "#############################"
-    echo "Waiting 15 seconds, starting $(TZ='Europe/Berlin' date +"%H:%M.%S")"
+    echo "Waiting 15 seconds, starting $(date +"%H:%M.%S")"
     # wait 65 seconds then try again
     sleep 10
 
@@ -24,10 +27,10 @@ do
     else
         echo "File 'RUN' does not exist in the root directory."
     fi
-    echo "Current time is $(TZ='Europe/Berlin' date +"%H:%M.%S")"
+    echo "Current time is $(date +"%H:%M.%S")"
 
     # Get the current hour and minute in 24-hour format (e.g., 14:30)
-    current_time=$(TZ='Europe/Berlin' date +"%H:%M")
+    current_time=$(date +"%H:%M")
 
     # Extract the hour and minute components
     current_hour=${current_time:0:2}
@@ -80,7 +83,7 @@ do
             sleep 1
 
             # wait 5:05 minutes
-            echo "Waiting 5 minutes, starting $(TZ='Europe/Berlin' date +"%H:%M.%S")"
+            echo "Waiting 5 minutes, starting $(date +"%H:%M.%S")"
             sleep 260
         else
             echo "NOT STARTING. Waiting for 'RUN' set in clipboard or file '/RUN' being available."
