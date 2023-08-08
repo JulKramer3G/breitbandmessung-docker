@@ -57,6 +57,11 @@ do
             DISPLAY=:0 xdotool click 1
             sleep 1
 
+            # click on update "OK" (may not be available, but dont care)
+            DISPLAY=:0 xdotool mousemove 932 479
+            DISPLAY=:0 xdotool click 1
+            sleep 1
+
             # haeckchen
             DISPLAY=:0 xdotool mousemove 694 405
             DISPLAY=:0 xdotool click 1
